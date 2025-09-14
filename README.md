@@ -1,18 +1,35 @@
 # HOW-2-SDL3-QUICK-n-EZ-WINDOWS-EDITION-
+## WHAT IS THIS????
 This is a quick and sleezy, nice and breezy SDL3 tutorial. My OS is Windows 11 (Desktop Version) and the SDL version I'm using is 3.2.20, so I apologize incase anything updates and coders are confused.
 
-Please note that I'm not trying to be all nitty gritty and exacting with a bunch of numbers and so on, I'm going for more of an informal and straight forward tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? 
+## ANYTHING IMPORTANT TO KNOW BEFOREHAND?
+Please note that I'm not trying to be all nitty gritty and exacting with a bunch of numbers and so on, I'm going for more of an informal and straight forward tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? Also this is for c/c++. Idk, just felt I needed to say that incase people use other languages for SDL.
 
+## ANYTHING ELSE?
 At the time I'm writing this, SDL3 is still somewhat knew so please do have some patience and maybe even try to experiement with SDL2 as it has been significantly more explored by the SDL community and could be a much better pick for you.
 
 # PREREQUISITES IF THATS HOW YOU SPELL IT
+## COMPUTER SPECIFICATIONS YO
 If you just bought a new and recently released windows laptop, you should probably be good for computer specifications and what not. But if you're really concerned, any window's desktop version is supposed to work while some other window versions won't. Just Look at some of the wiki stuff: (https://wiki.libsdl.org/SDL3/README-windows). Really, just have a decent laptop and you should be good to go.
 
-Considering SDL is a sort of GRAPHICS LIBRARY ("Ermmm, aschtualy its 'a cross-platform software development library'"), you would probably want to have an up to date graphics driver (The software that lets your computer talk to your graphics card, which in total makes awesome pictures on your screen appear). 
+## GRAPHICS DRIVERS
+Considering SDL is a sort of GRAPHICS LIBRARY (Ermmm, aschtualy its "a cross-platform software development library"), you would probably want to have an up to date graphics driver (The software that lets your computer talk to your graphics card, which in total makes awesome pictures on your screen appear). I personally have and use an Intel graphics driver, but other computers may use NVIDIA or AMD's graphic drivers. 
 
+## INSTALLING SAID DRIVERS
+For installing/replacing new Intel graphics drivers look here: https://www.intel.com/content/www/us/en/search.html#sort=%40lastmodifieddt%20descending&f:@tabfilter=[Downloads]&f:@stm_10385_en=[Graphics] 
+
+For NVIDIA: https://www.nvidia.com/en-us/drivers/
+
+For AMD: https://www.amd.com/en/support/download/drivers.html
+
+For other or any difficulties: Google it and youtube it (You probably won't need to watch a video though), it took me little to no time finding these links off of the official websites for these, so I would assume its like this for other graphics drivers aswell. Installing drivers are not too hard either, so youtube it if you want to go completely braindead or you're just scared or uncertain over what you're doing.
+
+## WHAT ABOUT SDL3 ITSELF???????
+Go to the releases page for SDL3 (https://github.com/libsdl-org/SDL/releases), and lay your eyes upon the plethora of options to (not) choose from. Each of these are designed specifically for certain computer archtecitures, systems, and or methods of use, but for this tutorial I just used "SDL3-devel-3.2.22-mingw.tar.gz", which was at the bottom so you should probably go for something along those lines (look for "devel" and "ming.tar.gz") if you want to follow along with some of the set up. From here, unpack your zip file and beeline it to the "bin" file, or the binary file which is basically the precompiled and already put together version of SDL you can snag, located somewhere at "SDL3\SDL3-3.2.20\x86_64-w64-mingw32\bin". PLEASE REMEMBER WHERE THIS BINARY FILE IS/ITS DIRECTORY, AND KEEP IT THERE/PUT IT IN A SAFER PLACE WHERE YOU WON'T MOVE IT. 
+
+From here, look up something called "environment variables" in your computer before selecting and going into it it, double click/select and edit "path", and add in a new environment variable, typing/copy and pasting the directory of the previously mentioned binary file. With this, there are two things to note: You have have made this binary file accessable in most places in your computer by providing it its directory. However, if you move SDL or need to install a newer version of it, you will need to do all of this over again. This is why I said to keep it in a safe place with and to not really touch it, since shuffling this binary file around throughout the span of a couple folders in the middle of compiling your SDL programs would cause a lot of needless environment variable adjustments. This should be familiar with you since you would probably have needed to do this exact process with GCC. If your using something like clang, its probably the same aswell, but I'll have to look into it (I will in fact, not look into it). But yeah, it should be ready to use now, so please move onto the next section called:
 # HOW TO SDL3 QUICK N EZ YO!
-
------HOW TO COMPILE
+## HOW TO COMPILE
 DESC. ON HOW: compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project
 TERMINAL COMM: g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
 
