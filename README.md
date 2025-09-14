@@ -1,13 +1,20 @@
 # HOW-2-SDL3-QUICK-n-EZ-WINDOWS-EDITION-
-This is a quick and sleezy, nice and breezy SDL3 tutorial. My OS is Windows 11 and the SDL version I'm using is 3.2.20, so I apologize incase anything updates and coders are confused.
+This is a quick and sleezy, nice and breezy SDL3 tutorial. My OS is Windows 11 (Desktop Version) and the SDL version I'm using is 3.2.20, so I apologize incase anything updates and coders are confused.
 
-HOW TO SDL3 QUICK N EZ
+Please note that I'm not trying to be all nitty gritty and exacting with a bunch of numbers and so on, I'm going for more of an informal and straight forward tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? 
+
+At the time I'm writing this, SDL3 is still somewhat knew so please do have some patience and maybe even try to experiement with SDL2 as it has been significantly more explored by the SDL community and could be a much better pick for you.
+
+# PREREQUISITES IF THATS HOW YOU SPELL IT
+If you just bought a new and recently released windows laptop, you should probably be good for computer specifications and what not. But if you're really concerned, any window's desktop version is supposed to work while some other window versions won't. Just Look at some of the wiki stuff: (https://wiki.libsdl.org/SDL3/README-windows). Really, just have a decent laptop and you should be good to go.
+
+Considering SDL is a sort of GRAPHICS LIBRARY ("Ermmm, aschtualy its 'a cross-platform software development library'"), you would probably want to have an up to date graphics driver (The software that lets your computer talk to your graphics card, which in total makes awesome pictures on your screen appear). 
+
+# HOW TO SDL3 QUICK N EZ YO!
 
 -----HOW TO COMPILE
----compile with g++, take source code and output to exe file, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project
-
----example
-g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
+DESC. ON HOW: compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project
+TERMINAL COMM: g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
 
 
 -----HOW TO INCLUDE IN PROJECT
