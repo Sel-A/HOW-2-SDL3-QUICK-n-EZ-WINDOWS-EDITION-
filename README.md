@@ -2,11 +2,21 @@
 ## WHAT IS THIS????
 This is a quick and sleezy, nice and breezy SDL3 tutorial. My OS is Windows 11 (Desktop Version) and the SDL version I'm using is 3.2.20, so I apologize incase anything updates and coders are confused.
 
+Ok well, admittantly a 2 to 2 1/2 hundred lines of text and a few paragraphs are a lot to take in, but honestly most of the information needed to draw a bunch of pixels onto your screen is right here, plus I'll even drop you all the code to play around with and use, so really isn't the extra unexpected length just a slight trade off? Whatever, disregarding my deceptive tactics, I'm here to help you and myself when I eventually do forget this, or not idk. Its better to be prepared and have nothing happen, than to be unprepared and have everything happen.
+
+## ANY CONCERNS WITH THIS BEFORE I MOVE ON??? 
+My favorite household pet is a rabbit. I take neither side on the cat vs dog debate, as I consider the role of the rabbit in house hold pet and center of attention to be well above cats or dogs. Oh yeah and the slight verbosity, if that's even a word.
+
+## no like with the tutorial
+oh nah its good, lil wordy tho
+
+its out of neccesity so take what you want from that 
+
 ## ANYTHING IMPORTANT TO KNOW BEFOREHAND?
-Please note that I'm not trying to be all nitty gritty and exacting with a bunch of numbers and so on, I'm going for more of an informal and straight forward tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? Also this is for c/c++. Idk, just felt I needed to say that incase people use other languages for SDL.
+In this guide/tutorial/hold my hand and tell me about this story momma/how-2-ez I'm going for more of an nonprofessional (because informal kinda holds a more negative connotation towards me), forward and yet cautious tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? Also this is for c/c++. Idk, just felt I needed to say that incase people use other languages for SDL. Never seen it before though.
 
 ## ANYTHING ELSE?
-At the time I'm writing this, SDL3 is still somewhat knew so please do have some patience and maybe even try to experiement with SDL2 as it has been significantly more explored by the SDL community and could be a much better pick for you.
+At the time I'm writing this, SDL3 is still somewhat new so please do have some patience and maybe even try to experiement with SDL2 as it has been significantly more explored by the SDL community and could be a much better pick for you.
 
 # PREREQUISITES IF THATS HOW YOU SPELL IT
 ## COMPUTER SPECIFICATIONS YO
@@ -24,61 +34,91 @@ For AMD: https://www.amd.com/en/support/download/drivers.html
 
 For other or any difficulties: Google it and youtube it (You probably won't need to watch a video though), it took me little to no time finding these links off of the official websites for these, so I would assume its like this for other graphics drivers aswell. Installing drivers are not too hard either, so youtube it if you want to go completely braindead or you're just scared or uncertain over what you're doing.
 
-## WHAT ABOUT SDL3 ITSELF???????
+## WHAT ABOUT SDL3 ITSELF??????? WHERE DO I GET ME MY SDL???????
 Go to the releases page for SDL3 (https://github.com/libsdl-org/SDL/releases), and lay your eyes upon the plethora of options to (not) choose from. Each of these are designed specifically for certain computer archtecitures, systems, and or methods of use, but for this tutorial I just used "SDL3-devel-3.2.22-mingw.tar.gz", which was at the bottom so you should probably go for something along those lines (look for "devel" and "ming.tar.gz") if you want to follow along with some of the set up. From here, unpack your zip file and beeline it to the "bin" file, or the binary file which is basically the precompiled and already put together version of SDL you can snag, located somewhere at "SDL3\SDL3-3.2.20\x86_64-w64-mingw32\bin". PLEASE REMEMBER WHERE THIS BINARY FILE IS/ITS DIRECTORY, AND KEEP IT THERE/PUT IT IN A SAFER PLACE WHERE YOU WON'T MOVE IT. 
 
 From here, look up something called "environment variables" in your computer before selecting and going into it it, double click/select and edit "path", and add in a new environment variable, typing/copy and pasting the directory of the previously mentioned binary file. With this, there are two things to note: You have have made this binary file accessable in most places in your computer by providing it its directory. However, if you move SDL or need to install a newer version of it, you will need to do all of this over again. This is why I said to keep it in a safe place with and to not really touch it, since shuffling this binary file around throughout the span of a couple folders in the middle of compiling your SDL programs would cause a lot of needless environment variable adjustments. This should be familiar with you since you would probably have needed to do this exact process with GCC. If your using something like clang, its probably the same aswell, but I'll have to look into it (I will in fact, not look into it). But yeah, it should be ready to use now, so please move onto the next section called:
-# HOW TO SDL3 QUICK N EZ YO!
-## HOW TO COMPILE
-DESC. ON HOW: compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project
-TERMINAL COMM: g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
 
+# HOW TO SDL3 ~~QUICK~~ at a moderate speed N EZ YO!
 
------HOW TO INCLUDE IN PROJECT
----First, make sure the sld3's bin (Or binary file) is in window's PATH directory so you can use it where ever you want  
-then, "#include <SDL3/SDL.h>" and go ham
+## HOW TO INCLUDE IN PROJECT
+First, make sure the sld3's bin (Or binary file) is in window's PATH directory so you can use it where ever you want. Afterwards, you're just an include away from using SDL's graphical capabilities:
 
------SET UP/THE PROJECT ITSELF
----Before you do anything, make sure you understand the sdl designated defines functions that will be used before, during and after your program begins to actually run
+ 	//including SDL3's header file, all full of the cool stuff you definitely want. 
+	//Curious of whats actually in it? Go find it in your SDL3 folder and look through it
+	#include <SDL3/SDL.h>
+	//literally it, go ham budders
 
-"#define SDL_MAIN_USE_CALLBACKS" will resolve any entry point issues between SDL3 and your OS n whatnot 
+## SET UP/THE PROJECT ITSELF
+Before doing anything, defining SDL Callbacks will help resolve any entry point issues (Your main function) between SDL3 and your OS if there is any. I'm pretty sure there is with windows, since I definitely needed to the callbacks to get anything to pop up on my screen, so define callbacks BEFORE including SDL3.
 
-"SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){}" is the function your progrgam will run once before the main loop where the cool stuff happens. use this for any initiailzation and to "SDL_Init(SDL_INIT_VIDEO)". Without this boolean returning setup, you will get absoloutely no grpahics whatsoever so make sure this sets up 
+	//defined BEFORE including sdl3, otherwise sdl3 won't see your macro for enabling/defining it, thus failing to turn on callbacks
+	#define SDL_MAIN_USE_CALLBACKS 1
+	#include <SDL3/SDL.h>
 
-"SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
-	//if we quit the window
-	if (event->type == SDL_EVENT_QUIT){
-		//nothing went wrong leading up to this, celebrate
-		return SDL_APP_SUCCESS;
+# THE FOUR WISE FUNTCIONS
+As of now, we gotta make sure you understand the key SDL functions that will be used before, during and after running your program to actually run within your main file.
+
+SDL App Initialization is the function your program will run once before the main loop where the cool stuff happens. Use this for any kinds of initiailzation, such as initializing the SDL video subsytem, which is directly responsible for, you guessed it, the readying for the visual aspects of your application. 
+
+Actually, make sure to check if the initialization for that, the video subsystem, is actually initialized and returns true as a result, otherwise you won't get any graphics. I apologize for this, but I can't help but emphasize on this and a few more things since the failure of one of component can lead to frustrating debugging sessions since it doesn't exactly always throw an error if something doesn't work. Good checking and security measures are key, such as with the initial check of the video subsystem's state and the print statement that follows to help pin point the location of the error, rather than just being told there is one and scrambling to locate it. 'Nuff yapping, here's the code that was explained in the previous paragraph:
+
+	//Runs once upon program start up
+	SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
+  		//video subsystem to set up check
+  		if (!SDL_Init(SDL_INIT_VIDEO)){
+			//failure so announce it and die
+			printf("VIDEO INIT FAILURE");
+   			//we will cover these return statements deeper into the tutorial, 
+	  		// lets cover these few important functions first okay?
+			return SDL_APP_FAILURE;
+		}
+  		//move onto the main loop of the program
+		return SDL_APP_CONTINUE;
 	}
-	//we dont care abt other events, continue
-	return SDL_APP_CONTINUE;
-}" beyond basic simulations, this is literally all you need lmao. this checks for any window based events, which to an extent is important but really isnt so thats why i gave all the code needed for it in c++
 
-"SDL_AppResult SDL_AppIterate(void *appstate){}" is the heart and soul of your sdl3 program, acting as the main loop of it all to make pretty pixels move
+Next on the list of big names is SDL App Iterate, which is the heart of your program. Here is where your graphics come to live and exist before being wiped off the screen. More on that later, somewhere where we talk about drawing pixels. How this function works is relatively simple: Its one big loop. This function runs tons of times per second, and every iteration you get to perform your graphical escapades before finally showing off your masterpiece to your screen. If its not clicking, think of how we're going to use it like normal animation: for every frame (iteration of the loop/function), we pull up a new piece of paper to begin working on (clearing the window), draw what we want (render our pixels), then present to ourselves and get a good look at them (sending our renderered work to the window to actually see) before moving onto the next frame (moving onto the next iteration).
 
-"void SDL_AppQuit(void *appstate, SDL_AppResult result){}" is like the setup function, but it runs once at the end. used for cleanup so its relavant and kinda important
+	SDL_AppResult SDL_AppIterate(void *appstate){
+		//wipe the screen clean for this drawing
+  		//draw the drawing
+		//show it off
 
----notice how most of these return an SDL_AppResult. these are basically values that help determine whether to terminate the program or not, and whether the program actually ran properly
-
-returning "SDL_APP_CONTINUE" in some of these functions just tells sdl3 that everything is running smoothly, and to continue as business permits
-
-returning "SDL_APP_SUCCESS" or "SDL_APP_FAILURE" however, tells sdl3 to terminate the program because it either was a success or failed. pretty straight forward. 
-
----examples: with the SDL_AppEvent copy and paste we already covered two of the SDL_AppResult values through demonstration, so now we're going to demonstrate the usage of "SDL_APP_FAILURE" in addition to "SDL_Init(SDL_INIT_VIDEO)", since we have mentioned the great importance of making sure this sets up properly before and feel that a proper example is needed to effectively check if setup is done correctly and you can blame your problems on something else
-
-"
-//runs once upon startup
-SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
-	//failure init no visuals very bad
-	if (!SDL_Init(SDL_INIT_VIDEO)){
-		printf("VIDEO FAILURE");
-		return SDL_APP_FAILURE;
+		//moves on to another step, whether that may be checking for events or ending the program off
+		// both of which are actually functions we will cover right now
+		return SDL_APP_CONTINUE;
 	}
-	//setup was success, continue
-	return SDL_APP_CONTINUE;
-}
-"
+
+As foreshadowed by the code, we move onto SDL App Event, who is the function responsible for handling any window events that occur. This can include resizing, exiting, and whatever else. To keep it straightforward and encourage your own exploration, I will only be demonstrating how to close out an application using SDL App Event. In my opinion, we have bigger fish to fry than handling window resizing if we're moving through graphics programming.
+	
+ 	SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
+		//quit window check
+		if (event->type == SDL_EVENT_QUIT){
+			//nothing went wrong leading up to this celebrate
+			return SDL_APP_SUCCESS;
+		}
+		//we dont care abt other events, continue
+		return SDL_APP_CONTINUE;
+	}
+
+To appropriately end things off with these four core important functions, we end with the SDL App Quit function, which as you could have predicted, runs once when the program is set into motion to end. This guy is the guy you wanna work with if you need to clean up resources that need to be cleaned.
+
+	void SDL_AppQuit(void *appstate, SDL_AppResult result){
+ 		//cleanup
+	}
+
+## WAIT PLEASE WAIT WOAH, WHAT ABOUT THE RETURN STATEMENTS??
+
+Oh yeah those. Ok so to keep things brief yet effective, as you might have already figured out, these returns of type SDL App Result determine the next course of action. SDL Success, Continue, and Failure stop the program out of success, continue the program, and stop the program out of failure out of error. This would probably explain why SDL App Result doesn't have any return types, since it always runs at the end of a program whether it was successful or not before the process eventually ends. (There is no code demonstration, as the return values have already been demonstrated in the four previously discussed functions)
+
+	
+
+
+
+
+
+
+
 
 
 -----ACTUALLY DRAWING PIXELS ON YOUR WINDOW
@@ -100,3 +140,20 @@ SDL_SetRenderDrawColor(RENDERER, r,g,b,a);
 SDL_RenderPoints(RENDERER, PIXELDATA, PIXELCOUNT);
 "
 and what these do are also pretty straightfoward, SDL_SetRenderDrawColor() sets the render color to a certain RGBA value, with said value components listed in the following paramters, SDL_RenderClear() wipes your screen clear and sets it to the renderer's current color, and SDL_RenderPoints() takes in your pixel data (your baby girl SDL_FPoint*) and the amount of pixels there are in your data. With this in your main loop, try to compile everythhign and pray to god you havent messed anything up before now to see your pixels.
+
+
+
+
+
+
+
+
+
+
+
+
+
+## HOW TO COMPILE
+DESC. ON HOW: compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project
+TERMINAL COMM: g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
+
