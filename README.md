@@ -111,17 +111,8 @@ To appropriately end things off with these four core important functions, we end
 
 Oh yeah those. Ok so to keep things brief yet effective, as you might have already figured out, these returns of type SDL App Result determine the next course of action. SDL Success, Continue, and Failure stop the program out of success, continue the program, and stop the program out of failure out of error. This would probably explain why SDL App Result doesn't have any return types, since it always runs at the end of a program whether it was successful or not before the process eventually ends. (There is no code demonstration, as the return values have already been demonstrated in the four previously discussed functions)
 
-	
 
-
-
-
-
-
-
-
-
------ACTUALLY DRAWING PIXELS ON YOUR WINDOW
+## WHEN DO I GET TO SEE A WINDOW POP UP
 ---Get familiar with the SDL_Window and SDL_Renderer data sctructures, these will be responsible for holding your window's information and drawing to your window 
 
 Actually setting up these parts are relatively simple, contrary to how important they are: "SDL_CreateWindowAndRenderer(NAME, WIDTH, HEIGHT, FLAGS, &WINDOW, &RENDERER);"
