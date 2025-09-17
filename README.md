@@ -1,8 +1,10 @@
 # HOW-2-SDL3-QUICK-n-EZ-WINDOWS-EDITION-
 ## WHAT IS THIS????
-This is a quick and sleezy, nice and breezy SDL3 tutorial. My OS is Windows 11 (Desktop Version) and the SDL version I'm using is 3.2.20, so I apologize incase anything updates and coders are confused.
+This is a quick and sleezy, nice and breezy SDL3 tutorial to draw a few pixels onto your screen. My OS is Windows 11 (Desktop Version) and the SDL version I'm using is 3.2.20, so I apologize incase anything updates and coders are confused.
 
 Ok well, admittantly a 2 to 2 1/2 hundred lines of text and a few paragraphs are a lot to take in, but honestly most of the information needed to draw a bunch of pixels onto your screen is right here, plus I'll even drop you all the code to play around with and use, so really isn't the extra unexpected length just a slight trade off? Whatever, disregarding my deceptive tactics, I'm here to help you and myself when I eventually do forget this, or not idk. Its better to be prepared and have nothing happen, than to be unprepared and have everything happen.
+
+One more thing: I WILL GIVE YOU FULL EXAMPLE CODE WITH COMMENTS AT THE VERY END RIGHT, which is right after links to SDL3 documentation on every mentioned function in this tutorial. Please reference the documentation, as there you will find the actual function signatures, additional explanaions, code and what not.
 
 ## ANY CONCERNS WITH THIS BEFORE I MOVE ON??? 
 My favorite household pet is a rabbit. I take neither side on the cat vs dog debate, as I consider the role of the rabbit in house hold pet and center of attention to be well above cats or dogs. Oh yeah and the slight verbosity, if that's even a word.
@@ -13,7 +15,7 @@ oh nah its good, lil wordy tho
 its out of neccesity so take what you want from that 
 
 ## ANYTHING IMPORTANT TO KNOW BEFOREHAND?
-In this guide/tutorial/hold my hand and tell me about this story momma/how-2-ez I'm going for more of an nonprofessional (because informal kinda holds a more negative connotation towards me), forward and yet cautious tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? Also this is for c/c++. Idk, just felt I needed to say that incase people use other languages for SDL. Never seen it before though.
+In this guide/tutorial/hold my hand and tell me about this story momma/how-2-ez I'm going for more of an nonprofessional (because informal kinda holds a more negative connotation towards me), forward and yet cautious tutorial here so I do apologize (again) if you don't get what you're looking for here or have any problems. There will always be the wiki (https://wiki.libsdl.org/SDL3/FrontPage) and youtube AND reddit AND stackoverflow, so I guess try there? Also this is for c++. Idk, just felt I needed to say that incase people use other languages for SDL. Never seen it before though.
 
 ## ANYTHING ELSE?
 At the time I'm writing this, SDL3 is still somewhat new so please do have some patience and maybe even try to experiement with SDL2 as it has been significantly more explored by the SDL community and could be a much better pick for you.
@@ -112,39 +114,73 @@ To appropriately end things off with these four core important functions, we end
 Oh yeah those. Ok so to keep things brief yet effective, as you might have already figured out, these returns of type SDL App Result determine the next course of action. SDL Success, Continue, and Failure stop the program out of success, continue the program, and stop the program out of failure out of error. This would probably explain why SDL App Result doesn't have any return types, since it always runs at the end of a program whether it was successful or not before the process eventually ends. (There is no code demonstration, as the return values have already been demonstrated in the four previously discussed functions)
 
 
-## WHEN DO I GET TO SEE A WINDOW POP UP
----Get familiar with the SDL_Window and SDL_Renderer data sctructures, these will be responsible for holding your window's information and drawing to your window 
+# HOW DO I GET A WINDOW POP TO UP
+Get familiar with the SDL Window and SDL Renderer data structures, these will be responsible for holding your window's information and drawing to your window, which if you don't know, is kinda the whole reason your here. Actually setting up these parts are relatively simple, contrary to how important they are. For the renderer, think of it like a brush of sorts for drawing pixels, you'll see why eventually.
 
-Actually setting up these parts are relatively simple, contrary to how important they are: "SDL_CreateWindowAndRenderer(NAME, WIDTH, HEIGHT, FLAGS, &WINDOW, &RENDERER);"
+	//your window and renderer
+ 	SDL_Window* window;
+  	SDL_Renderer* renderer;
+	//the function that sets up said window and renderer
+ 	SDL_CreateWindowAndRenderer("Application Name 1", 400, 200, 0, &window, &renderer);
+	//...
+ 	return SDL_APP_CONTINUE;
+  
+For a quick rundown, the function takes a char* const for the name you want for your application, the application window's width and height respectively, any window flags which can be used for some pretty interesting things like automatically setting the window to fullscreen or just flat out minimizing it upon program execution, and of course the memory addresses to your window and renderer pointers. If you're not familiar with double pointers, watch some youtube videos over it and it'll probably get better. All it needs is a little time and everything will make some sense. Do note that it is also important to check for null pointers, as you really can't have an application with visuals without the visuals. But with this continues your journey to your beautious pixels.
 
-for a quick rundown, name is the name you give your application which you could view at the top left of your application window, width and height are the dimensions of your window, flags are special and specified properties you want for the window (just put a zero if you dont want any of that, itll still run fine), and window and renderer are the references to your window and renderer. PLEASE NOTE: window and renderer are pointers by themself in this example, making &window and &renderer double pointers if thats what you call them.
+ 	//your window and renderer
+ 	SDL_Window* window;
+  	SDL_Renderer* renderer;
+	//the function that IS SUPPOSED TO set up said window and renderer, 
+ 	// but we double check anyways for security and program functinality like a good programmer
+ 	if (!SDL_CreateWindowAndRenderer("Application Name 1", 400, 200, 0, &window, &renderer)){
+		//cut things short 
+		return SDL_APP_FAILURE;
+  	}
+	//...
+ 	return SDL_APP_CONTINUE;
 
-here, its also important to check for any nullptrs before continuign on, since without them you wont see squat
+NOTE: Please do remember to declare window and renderer variables globally, last thing you want to do is make a black screen appear and reflect your sad face back not because you don't like blank screens, but because this was supposed to be more than just a blank screen. Some of these demonstrations may not exactly be the way you want to implement the shown code in your own.
 
----From here, you just need to put forward a little bit more of effort before you have any results, namely with your pixels. SDL_FPoint is your guy here (He holds point information for your pixels), and to work better with the declared functions for him, you need to make him into a pointer (SDL_FPoint*) so he can hold an array full of of pixel infomation. Dont forget to actually give him points though, thats pretty important. Each point will have an x and y variable assigned to it, so give it some random float value between 0 and 1 (noninclusive of 1 :[ ) using SDL_randF() 
+
+# PIXELS YESSIR 
+From here, assuming you did everything else in this tutorial, you just need to put forward a little bit more of effort before you have any results, namely with your pixels. SDL_FPoint is your guy here (He holds point information for your pixels). Dont forget to actually give him points though, thats pretty important. Each point will have an x and y variable assigned to it, so give it some random float value between 0 and 1 (noninclusive of 1) using SDL_randF(). Also make sure your points are globally accessable.
+
+	//your pixels 
+	int pixelCount = 3
+ 	//very slim tall bounds for funsies 
+	double boundsWidth = 50, boundsHeight = 300;
+ 	//whole array for your point structure
+	SDL_FPoint* pointData = new SDL_FPoint[pixelCount];
+	//giving each of your point random-ish positions
+ 	for (int i = 0; i < pixelCount; i++){
+		//random positions within zero and the given bounds
+  		// (points will not have positons either to either of the bound values)
+ 		pointData[i].x = SDL_randf() * boundsWidth;
+ 		pointData[i].y = SDL_randf() * boundsHeight; 
+ 
+	}
+  
 
 Now with that out of the way, there is about 5 lines of code between you and your pixels:
-"
-SDL_SetRenderDrawColor(RENDERER, r,g,b,a);
-SDL_RenderClear(RENDERER);
-SDL_SetRenderDrawColor(RENDERER, r,g,b,a);
-SDL_RenderPoints(RENDERER, PIXELDATA, PIXELCOUNT);
-"
-and what these do are also pretty straightfoward, SDL_SetRenderDrawColor() sets the render color to a certain RGBA value, with said value components listed in the following paramters, SDL_RenderClear() wipes your screen clear and sets it to the renderer's current color, and SDL_RenderPoints() takes in your pixel data (your baby girl SDL_FPoint*) and the amount of pixels there are in your data. With this in your main loop, try to compile everythhign and pray to god you havent messed anything up before now to see your pixels.
+
+	SDL_SetRenderDrawColor(renderer, r,g,b,a);
+	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(renderer, r,g,b,a);
+	SDL_RenderPoints(renderer, pointData, pixelCount);
+ 
+What these do are also pretty straightfoward, SDL_SetRenderDrawColor() sets the render color to a certain RGBA value, with said value components listed in the following paramters, SDL_RenderClear() wipes your screen clear and sets it to the renderer's current color, and SDL_RenderPoints() takes in your pixel data (your baby girl SDL_FPoint*) and the amount of pixels there are in your data. With this portion of code in your main loop, try to compile everything and pray to god you havent messed anything up before now to see your pixels. As mentioned before, try not to copy and paste everything into your code willy nilly, it may not work in the way you intend for it to work. Please view the example at the very end for the idea on how and where these functions and structures are used. 
+
+# HOW TO COMPILE
+I'll make this very quick, assuming you really want some results right about now. Compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project. Heres an example:
+
+	g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
+
+Please also note if you haven't figured it out already, that the terminal command's description that I gave goes in order in terms of describing the pieces to this command. Heres a more generalized version:
+
+	g++ "mainFileDirectory" -o "mainExecutableDirectory" -I "SDL3includeFolderDirectory" -L "SDL3includeLibraryrDirectory" -lSDL3
 
 
 
 
 
-
-
-
-
-
-
-
-
-## HOW TO COMPILE
-DESC. ON HOW: compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project
-TERMINAL COMM: g++ "C:\Users\USER1\SOL\Desktop\boidsMain.cpp" -o "C:\Users\USER1\SOL\Desktop\boids.exe" -I "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\include" -L "C:\User Downloaded Files\SDL3\SDL3-3.2.20\x86_64-w64-mingw32\lib" -lSDL3
-
+Thank you for reading <3
