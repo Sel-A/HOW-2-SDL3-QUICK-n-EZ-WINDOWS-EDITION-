@@ -295,6 +295,11 @@ Please also note if you haven't figured it out already, that the terminal comman
 	
 	void SDL_AppQuit(void *appstate, SDL_AppResult result){
 		//cleanup
+  		//ive been told sdl3 does the cleanup for us...
+		//dunno bout that, but try to figure out how to destroy
+  		//and deinitialize stld3's video subsystem, window and renderer
+		//lil "challenge from me"
+  		//(HINT: There are literally functions for these)
 	}
 
 
