@@ -4,7 +4,11 @@ This is a quick and sleezy, nice and breezy SDL3 tutorial to draw a few pixels o
 
 Ok well, admittantly a 2 to 2 1/2 hundred lines of text and a few paragraphs are a lot to take in, but honestly most of the information needed to draw a bunch of pixels onto your screen is right here, plus I'll even drop you all the code to play around with and use, so really isn't the extra unexpected length just a slight trade off? Whatever, disregarding my deceptive tactics, I'm here to help you and myself when I eventually do forget this, or not idk. Its better to be prepared and have nothing happen, than to be unprepared and have everything happen.
 
-One more thing: I WILL GIVE YOU FULL EXAMPLE CODE WITH COMMENTS AT THE VERY END RIGHT, which is right after links to SDL3 documentation on every mentioned function in this tutorial. Please reference the documentation, as there you will find the actual function signatures, additional explanaions, code and what not.
+One more thing: I WILL GIVE YOU FULL EXAMPLE CODE WITH COMMENTS AT THE VERY END RIGHT. Please reference the documentation, as there you will find the actual function signatures, additional explanaions, code and what not. 
+
+Wiki: https://wiki.libsdl.org/SDL3/FrontPage 
+
+NOTE: Make sure you're looking at SDL3 documentation, documentation for SDL2 will sometimes pop up and potentially give you misleading information for your current version. Theres a reason why one is named SDL3 and the other is named SDL2, __they're not exactly the same thing.__
 
 ## ANY CONCERNS WITH THIS BEFORE I MOVE ON??? 
 My favorite household pet is a rabbit. I take neither side on the cat vs dog debate, as I consider the role of the rabbit in house hold pet and center of attention to be well above cats or dogs. Oh yeah and the slight verbosity, if that's even a word.
@@ -57,6 +61,9 @@ Before doing anything, defining SDL Callbacks will help resolve any entry point 
 	//defined BEFORE including sdl3, otherwise sdl3 won't see your macro for enabling/defining it, thus failing to turn on callbacks
 	#define SDL_MAIN_USE_CALLBACKS 1
 	#include <SDL3/SDL.h>
+	//helps with sdl3 entrypoint/main funtions
+ 	#include <SDL3/SDL_main.h>
+
 
 # THE FOUR WISE FUNTCIONS
 As of now, we gotta make sure you understand the key SDL functions that will be used before, during and after running your program to actually run within your main file.
@@ -125,15 +132,20 @@ Get familiar with the SDL Window and SDL Renderer data structures, these will be
 	//...
  	return SDL_APP_CONTINUE;
   
-For a quick rundown, the function takes a char* const for the name you want for your application, the application window's width and height respectively, any window flags which can be used for some pretty interesting things like automatically setting the window to fullscreen or just flat out minimizing it upon program execution, and of course the memory addresses to your window and renderer pointers. If you're not familiar with double pointers, watch some youtube videos over it and it'll probably get better. All it needs is a little time and everything will make some sense. Do note that it is also important to check for null pointers, as you really can't have an application with visuals without the visuals. But with this continues your journey to your beautious pixels.
+For a quick rundown, the function takes a char* const for the name you want for your application, the application window's width and height respectively, any window flags which can be used for some pretty interesting things like automatically setting the window to fullscreen or just flat out minimizing it upon program execution, and of course the memory addresses to your window and renderer pointers. If you're not familiar with double pointers, watch some youtube videos over it and it'll probably get better. All it needs is a little time and everything will make some sense. Do note that it is also important to check for null pointers, as you really can't have an application with visuals without the visuals. But with this continues your journey to your beautious pixels. Don't forget that print statement to help differentiate between errors.
 
  	//your window and renderer
  	SDL_Window* window;
   	SDL_Renderer* renderer;
+    //window dimensions, very slim tall bounds for funsies 
+	// (you should 100% change the very slim window you get though)
+	int boundsHeight = 50;
+	int boundsWidth = 300;
 	//the function that IS SUPPOSED TO set up said window and renderer, 
  	// but we double check anyways for security and program functinality like a good programmer
- 	if (!SDL_CreateWindowAndRenderer("Application Name 1", 400, 200, 0, &window, &renderer)){
-		//cut things short 
+ 	if (!SDL_CreateWindowAndRenderer("Application Name 1", boundsWidth, boundsHeight, 0, &window, &renderer)){
+		//failure so announce this and die 
+  		printf("WINDOW RENDERER CREATE FAILURE");
 		return SDL_APP_FAILURE;
   	}
 	//...
@@ -145,19 +157,21 @@ NOTE: Please do remember to declare window and renderer variables globally, last
 # PIXELS YESSIR 
 From here, assuming you did everything else in this tutorial, you just need to put forward a little bit more of effort before you have any results, namely with your pixels. SDL_FPoint is your guy here (He holds point information for your pixels). Dont forget to actually give him points though, thats pretty important. Each point will have an x and y variable assigned to it, so give it some random float value between 0 and 1 (noninclusive of 1) using SDL_randF(). Also make sure your points are globally accessable.
 
-	//your pixels 
-	int pixelCount = 3
+	//your pixels (Pixel count is dependent on how good your computer is, 
+ 	// but its still going to be able to support a decent amount of pixels
+  	// if statements is where performance starts to get ya)
+	int pixelCount = 3000;
  	//very slim tall bounds for funsies 
-	double boundsWidth = 50, boundsHeight = 300;
- 	//whole array for your point structure
+	int boundsHeight = 50;
+	int boundsWidth = 300;
+	//whole array for your points
 	SDL_FPoint* pointData = new SDL_FPoint[pixelCount];
-	//giving each of your point random-ish positions
+	//giving each of your points random-ish positions
  	for (int i = 0; i < pixelCount; i++){
 		//random positions within zero and the given bounds
   		// (points will not have positons either to either of the bound values)
  		pointData[i].x = SDL_randf() * boundsWidth;
  		pointData[i].y = SDL_randf() * boundsHeight; 
- 
 	}
   
 
@@ -167,8 +181,9 @@ Now with that out of the way, there is about 5 lines of code between you and you
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawColor(renderer, r,g,b,a);
 	SDL_RenderPoints(renderer, pointData, pixelCount);
- 
-What these do are also pretty straightfoward, SDL_SetRenderDrawColor() sets the render color to a certain RGBA value, with said value components listed in the following paramters, SDL_RenderClear() wipes your screen clear and sets it to the renderer's current color, and SDL_RenderPoints() takes in your pixel data (your baby girl SDL_FPoint*) and the amount of pixels there are in your data. With this portion of code in your main loop, try to compile everything and pray to god you havent messed anything up before now to see your pixels. As mentioned before, try not to copy and paste everything into your code willy nilly, it may not work in the way you intend for it to work. Please view the example at the very end for the idea on how and where these functions and structures are used. 
+	SDL_RenderPresent(renderer);
+
+What these do are also pretty straightfoward, SDL_SetRenderDrawColor() sets the render color to a certain RGBA value, with said value components listed in the following paramters, SDL_RenderClear() wipes your screen clear and sets it to the renderer's current color, SDL_RenderPoints() takes in your pixel data (your baby girl SDL_FPoint*) and the amount of pixels there are in your data to draw your pixels onto a buffer (think of it like storing your wet painting somewhere to dry), and SDL_RenderPresent() brings your buffer to the front/onto the window for you to actually see (pulling that painting back out to look when the colors finally set). With this portion of code in your main loop, try to compile everything and pray to god you havent messed anything up before now to see your pixels. As mentioned before, try not to copy and paste everything into your code willy nilly, it may not work in the way you intend for it to work. Please view the example at the very end for the idea on how and where these functions and structures are used. 
 
 # HOW TO COMPILE
 I'll make this very quick, assuming you really want some results right about now. Compile with g++, take source code and output to an executable file/directory, include 64 bit include folder from SDL3, link 64 libraries from SDL3, and link the binary file to the project. Heres an example:
@@ -178,6 +193,125 @@ I'll make this very quick, assuming you really want some results right about now
 Please also note if you haven't figured it out already, that the terminal command's description that I gave goes in order in terms of describing the pieces to this command. Heres a more generalized version:
 
 	g++ "mainFileDirectory" -o "mainExecutableDirectory" -I "SDL3includeFolderDirectory" -L "SDL3includeLibraryrDirectory" -lSDL3
+
+# EXAMPLE CODE
+	//g++ "mainFileDirectory" -o "mainExecutableDirectory" -I "SDL3includeFolderDirectory" -L "SDL3includeLibraryrDirectory" -lSDL3
+	//defined BEFORE including sdl3, otherwise sdl3 won't see your macro for enabling/defining it, thus failing to turn on callbacks
+	#define SDL_MAIN_USE_CALLBACKS 1
+	//including SDL3's header file, all full of the cool stuff you definitely want. 
+	#include <SDL3/SDL.h>
+	//helps with sdl3 entrypoint/main funtions
+	#include <SDL3/SDL_main.h>
+	//for our printf error reporters
+	#include <stdio.h>
+	
+	//(I indented comments and declarations for nicer lookin code
+	// ZERO purpose beyond that tho lol)
+	//global/key variables to the program
+		//your window and renderer
+			SDL_Window* window;
+			SDL_Renderer* renderer;
+		//your pixels (Pixel count is dependent on how good your computer is, 
+	 	// but its still going to be able to support a decent amount of pixels
+	  	// if statements is where performance starts to get ya)
+			int pixelCount = 3000;
+		//very slim tall bounds for funsies 
+		// (you should 100% change the very slim window you get though)
+			int boundsWidth = 50;
+			int boundsHeight = 300;
+		//whole array for your point structure
+			SDL_FPoint* pointData = new SDL_FPoint[pixelCount];
+	
+	
+	//Runs once upon program start up
+	SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
+		//video subsystem to set up check
+		if (!SDL_Init(SDL_INIT_VIDEO)){
+			//failure so announce it and die
+			printf("VIDEO INIT FAILURE");
+			//we will cover these return statements deeper into the tutorial, 
+	  		// lets cover these few important functions first okay?
+			return SDL_APP_FAILURE;
+		}
+	
+		//the function that IS SUPPOSED TO set up said window and renderer, 
+		// but we double check anyways for security and program functinality like a good programmer
+	 	if (!SDL_CreateWindowAndRenderer("Application Name 1", boundsWidth, boundsHeight, 0, &window, &renderer)){
+		//failure so announce this and die 
+			printf("WINDOW RENDERER CREATE FAILURE");
+			return SDL_APP_FAILURE;
+		}
+	
+		//giving each of your points random-ish positions
+		for (int i = 0; i < pixelCount; i++){
+			//random positions within zero and the given bounds
+			// (points will not have positons either to either of the bound values)
+			pointData[i].x = SDL_randf() * boundsWidth;
+			pointData[i].y = SDL_randf() * boundsHeight; 
+		}
+	
+		//move onto the main loop of the program
+		return SDL_APP_CONTINUE;
+	}
+	
+	SDL_AppResult SDL_AppIterate(void *appstate){
+		//wipe the screen clean for this drawing (setting it to black)
+		SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+		SDL_RenderClear(renderer);
+		
+		/*(not really) BONUS CONTENT 
+		//!!!!!SEIZURE WARNING OF SORTS!!!!!
+		//this gives it a static effect of sorts
+		//giving each of your points random-ish positions
+		for (int i = 0; i < pixelCount; i++){
+			//random positions within zero and the given bounds
+			// (points will not have positons either to either of the bound values)
+			pointData[i].x = SDL_randf() * boundsWidth;
+			pointData[i].y = SDL_randf() * boundsHeight; 
+		}
+		*/
+	
+		//draw the drawing (white pixels)
+		SDL_SetRenderDrawColor(renderer, 255,255,255,255);
+		SDL_RenderPoints(renderer, pointData, pixelCount);
+	
+		//show it off
+		SDL_RenderPresent(renderer);
+		
+		//moves on to another step, whether that may be checking for events or ending the program off
+		// both of which are actually functions we will cover right now
+		return SDL_APP_CONTINUE;
+	}
+	
+	SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
+		//quit window check
+		if (event->type == SDL_EVENT_QUIT){
+			//nothing went wrong leading up to this celebrate
+			return SDL_APP_SUCCESS;
+		}
+		//we dont care abt other events, continue
+		return SDL_APP_CONTINUE;
+	}
+	
+	void SDL_AppQuit(void *appstate, SDL_AppResult result){
+		//cleanup
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
